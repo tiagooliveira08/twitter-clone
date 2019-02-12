@@ -4,6 +4,8 @@ import cors from "cors";
 
 import tweetRouter from "./routes/tweetRouter";
 import likeRouter from "./routes/likeRouter";
+import registerRouter from "./routes/registerRouter";
+import auth from "./routes/auth";
 
 const port = process.env.PORT || 3001;
 
@@ -13,11 +15,14 @@ const server = require("http").Server(app);
 const io = require("socket.io")(server);
 
 app.use(cors("*"));
+
 app.use((req, res, next) => {
   req.io = io;
   next();
 });
+
 app.use(express.json());
+
 //server config
 server.listen(port, () => {
   console.log("server running in port", port);
@@ -36,5 +41,8 @@ mongoose
   });
 
 //routes
-app.use("/tweets", tweetRouter);
+app.use("/", registerRouter);
+
+app.use("/auth/", auth);
+app.use("/auth/tweets", tweetRouter);
 app.use("/likes", likeRouter);
