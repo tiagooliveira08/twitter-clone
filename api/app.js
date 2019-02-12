@@ -4,8 +4,6 @@ import cors from "cors";
 
 import tweetRouter from "./routes/tweetRouter";
 import likeRouter from "./routes/likeRouter";
-import registerRouter from "./routes/registerRouter";
-import auth from "./routes/auth";
 
 const port = process.env.PORT || 3001;
 
@@ -41,8 +39,6 @@ mongoose
   });
 
 //routes
-app.use("/", registerRouter);
 
-app.use("/auth/", auth);
-app.use("/auth/tweets", tweetRouter);
+app.use("/tweets", tweetRouter);
 app.use("/likes", likeRouter);
